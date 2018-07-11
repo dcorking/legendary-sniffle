@@ -1,7 +1,7 @@
-version: '3'
+version: '3.6'
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
+    build: .
     container_name: elasticsearch
     environment:
       - cluster.name=docker-cluster
@@ -13,7 +13,14 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - nakedesdata:/usr/share/elasticsearch/data
+      -
+        type: volume
+        source: nakedesdata
+        target: /usr/share/elasticsearch/data
+      -
+        type: bind
+        source: /Users/dcorking/facabackup
+        target: /backups
     ports:
       - 9200:9200
 volumes:
